@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "AtomLinkedInScraper",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "This Chrome extension is designed to scrap information from linkedin for the SocialAtom Recuriting Process",
+    "description": "The description of the application"
+  }
+}
