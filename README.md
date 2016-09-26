@@ -5,6 +5,7 @@ This extension is based on the Yeoman Google Chrome extension Generator (https:/
 
 To use this repo, please:
 
+```sh
 # Transform updated source written by ES2015 (default option)
 gulp babel
 
