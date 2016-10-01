@@ -1,9 +1,38 @@
-'use strict';
+'use strict'
 
-chrome.runtime.onInstalled.addListener(details => {
-  console.log('previousVersion', details.previousVersion);
-});
+var AtomScraperBackground = (function(jQuery, alasql){
+  /**
+   * Attributes
+   */
 
-chrome.browserAction.setBadgeText({text: '\'Allo'});
+  /**
+   * Private Methods
+   */
 
-console.log('\'Allo \'Allo! Event Page for Browser Action');
+
+  /**
+   * Public Methods
+   */
+
+  /* Initialize the module*/
+  var init = function(){
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+        chrome.storage.sync.set({'value': 'thevalue'}, function() {
+          // Notify that we saved.
+          console.log('Settings saved');
+        });
+
+        chrome.storage.sync.get(['value']), function (value) {
+          console.log('Saved in the store: ', value);
+        };
+        if (request.greeting == "hello")
+          sendResponse({farewell: "goodbye"});
+      });
+  };
+
+  // Module public definition
+  return {
+    init: init
+  };
+})(jQuery, alasql).init();

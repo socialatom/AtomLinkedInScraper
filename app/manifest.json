@@ -1,21 +1,25 @@
 {
-  "name": "__MSG_appName__",
+  "name": "AtomLinkedInScraper",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "__MSG_appDescription__",
+  "description": "Socialatom Linkedin Scraper for Profiles",
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "images/sa-ventures-16x16.png",
+    "128": "images/sa-ventures-128x128.png"
   },
   "default_locale": "en",
   "background": {
     "scripts": [
       "scripts/chromereload.js",
+      "scripts/alasql.min.js",
+      "scripts/moment.min.js",
+      "scripts/jquery.min.js",
       "scripts/background.js"
     ]
   },
   "permissions": [
     "tabs",
+    "activeTab",
     "http://*/*",
     "https://*/*",
     "background",
@@ -44,11 +48,18 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://www.linkedin.com/vsearch/*",
+        "https://www.linkedin.com/in/*"
       ],
       "js": [
+        "scripts/jquery.min.js",
+        "scripts/mutation-summary.js",
+        "scripts/moment.min.js",
+        "scripts/jquery.cookie.js",
         "scripts/contentscript.js"
+      ],
+      "css": [
+        "styles/content.css"
       ],
       "run_at": "document_end",
       "all_frames": false
@@ -59,13 +70,17 @@
   },
   "browser_action": {
     "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+      "19": "images/sa-ventures-19x19.png",
+      "38": "images/sa-ventures-38x38.png"
     },
     "default_title": "AtomLinkedInScraper",
     "default_popup": "popup.html"
   },
   "web_accessible_resources": [
-    "images/icon-48.png"
+    "images/sa-ventures-16x16.png",
+    "images/sa-ventures-19x19.png",
+    "images/sa-ventures-38-38.png",
+    "images/sa-ventures-64x64.png",
+    "images/sa-ventures-128x128.png"
   ]
 }

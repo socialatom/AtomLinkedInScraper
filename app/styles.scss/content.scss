@@ -1,0 +1,15 @@
+/*
+* Styles for the content page
+*/
+.atom-download-profile{
+  display: block !important;
+
+  img{
+    vertical-align: sub;
+  }
+}
+
+/** Overrides to keep LinkedIn looking good **/
+.result .srp-actions .secondary-actions-trigger .menu{
+  top : 50% !important;
+}
