@@ -62,11 +62,11 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
 
                     $(buttonsContainer).html(buttonSelectAsCandidate);
                     // Add the elements to display the rating results
-                    skillPercentageIndicator.html('Match: ' + rating.data.skillMatchPercentage.totalPercentage + '%');
+                    skillPercentageIndicator.html('Match: ' + rating.data.skillMatchPercentage.totalPercentage.toFixed(2) + '%');
                     var list = $(skillMatchListDropDown).find('.skills-list')[0];
                     var skillListRating = rating.data.skillMatchPercentage.skillFrequencyPercentage;
                     for(var skill in skillListRating){
-                      var percntg = skillListRating[skill]? skillListRating[skill] : 0;
+                      var percntg = skillListRating[skill]? skillListRating[skill].toFixed(2) : 0;
                       $(list).append('<li>' + skill + ' <span class="percentage">'+percntg+'%</span></li>');
                     }
 
