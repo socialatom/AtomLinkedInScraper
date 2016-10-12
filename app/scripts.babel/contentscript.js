@@ -4,7 +4,9 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
   /**
    * Global attributes
    */
-  var isSearchPage = true, resultsContainer, resultsPaginator, profileContainer;
+  var isSearchPage = true, resultsContainer, resultsPaginator, profileContainer,
+    profilesList = {};
+  var imgURL = chrome.extension.getURL('images/sa-ventures-16x16.png');
 
   /**
    * Private Methods
@@ -18,6 +20,77 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
         window.location = $(this).attr('href');
       }
     });
+    if(isSearchPage){
+      jQuery(resultsContainer).on('click', '.atom-select-candidate', function (event) {
+        event.preventDefault();
+
+        var profileId = $(this).data('profileid');
+
+        setProfileAsCandidate(profilesList[profileId])
+          .then(function (result) {
+            alert('Profile saved as Candidate, check it out on the extension popup.');
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+      });
+
+      jQuery(resultsContainer).find('li.result').each(function (index, element) {
+        var profileName = $(element).find('.main-headline').text();
+        var currentProfile = $(element).find('.description').text();
+        var skillPercentageIndicator = $(element).find('.skillMatch');
+        var skillMatchListDropDown = $(element).find('.skills-match-list');
+        var buttonsContainer = $(element).find('#download-profile-button');
+
+        // Try to get the profile from the local indexedDB
+        getProfile({profileName: profileName, currentProfile: currentProfile})
+          .then(function (response) {
+            // Get the profile and save it into the global variable
+            if(response.success){
+              console.log(response);
+              // Now we get the rating for the profile
+              profilesList[response.data.id] = response.data;
+              rateProfile(response.data)
+                .then(function (rating) {
+                  if(rating.success){
+                    // Add the Select Candidate button
+                    var buttonSelectAsCandidate = "<a class='primary-action-button label atom-select-candidate' " +
+                      "href='#' data-profileId='"+response.data.id+"'>" +
+                      " Select Candidate" +
+                      "</a><div class='clearfix'></div>";
+
+                    $(buttonsContainer).html(buttonSelectAsCandidate);
+                    // Add the elements to display the rating results
+                    skillPercentageIndicator.html('Match: ' + rating.data.skillMatchPercentage.totalPercentage + '%');
+                    var list = $(skillMatchListDropDown).find('.skills-list')[0];
+                    var skillListRating = rating.data.skillMatchPercentage.skillFrequencyPercentage;
+                    for(var skill in skillListRating){
+                      var percntg = skillListRating[skill]? skillListRating[skill] : 0;
+                      $(list).append('<li>' + skill + ' <span class="percentage">'+percntg+'%</span></li>');
+                    }
+
+                    // Append the rules summary
+                    $(list).append('<li>Satisfies '+rating.data.rulesMatched+' of '+rating.data.rules+' rules</li>');
+
+
+
+                  }
+                })
+                .catch(function (error) {
+                  skillMatchListDropDown.remove();
+                });
+            }else{
+              skillMatchListDropDown.remove();
+            }
+
+          })
+          .catch(function (error) {
+            skillMatchListDropDown.remove();
+          });
+      });
+    }
+
   };
 
   var enableObservers = function(){
@@ -44,8 +117,6 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
 
   var addElements = function () {
 
-    var imgURL = chrome.extension.getURL('images/sa-ventures-16x16.png');
-
     // Is search page
     if(isSearchPage){
 
@@ -57,10 +128,22 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
         // Add the download button
         var buttonSaveProfile = "<a class='primary-action-button label atom-download-profile' " +
           "href='"+profileUrl + "&atomGetProfile=true&atomReturnToSearch=true" +"'>" +
-          "<img src='"+imgURL+"'> Get Profile" +
+          "Get Profile" +
           "</a>";
 
+        var skillMatchIndicator =
+          '<div id="download-profile-button"></div>' +
+          '<div class="skillMatch">No Data</div>' +
+          '<div class="secondary-actions-trigger skills-match-list">' +
+            '<button role="button" class="trigger">' +
+              '<span>Skills Match</span>' +
+            '</button>' +
+            '<ul class="menu skills-list">' +
+            '</ul>' +
+          '</div>';
+
         $(result).find('.srp-actions').append(buttonSaveProfile);
+        $(result).find('.srp-actions').append(skillMatchIndicator);
       });
     }else{
       // Is profile page
@@ -217,28 +300,56 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
       twitter: getTwitter()
     };
 
-    console.log(profile);
+    return new Promise(function (success, reject) {
+      chrome.runtime.sendMessage({action: "save_profile", profile: profile}, function(response) {
+        if(response.success){
+          success(response.data);
+        }else{
+          reject(false);
+        }
+      });
+    });
 
-    if(window.location.href.search('&atomReturnToSearch=true') != -1 ){
-      //window.location.href = $.cookie("lastSearchUrl") + "&atomDownloadCompleted=true";
-    }
+
   };
+
+  var getProfile = function (searchTerms) {
+    return new Promise(function (success, reject) {
+      chrome.runtime.sendMessage({action: "get_profile", searchTerm: searchTerms}, function(response) {
+        success(response);
+      });
+    });
+  };
+
+  var rateProfile = function (profile) {
+    return new Promise(function (success, reject) {
+      chrome.runtime.sendMessage({action: "rate_profile", profile: profile}, function(response) {
+        success(response);
+      });
+    });
+  };
+
+  var setProfileAsCandidate = function (profile) {
+    return new Promise(function (success, reject) {
+      chrome.runtime.sendMessage({action: "set_profile_candidate", profile: profile}, function(response) {
+        success(response);
+      });
+    });
+  };
+
+
 
   var getHtmlFromElement = function (elemtent) {
     var element = $(profileContainer).find(elemtent);
 
     return element.text() || '-';
-  }
+  };
 
   /**
    * Public Methods
    */
   /* Initialize the module*/
   var init = function init() {
-
-    chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-      console.log(response.farewell);
-    });
 
     // Define if the current page is Search
     isSearchPage = window.location.href.startsWith('https://www.linkedin.com/vsearch')? true : false;
@@ -277,7 +388,15 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
 
       // Is profile to download?
       if(!isSearchPage && window.location.href.search('&atomGetProfile=true') != -1){
-        downloadProfile();
+        downloadProfile()
+          .then(function (response) {
+            if(window.location.href.search('&atomReturnToSearch=true') != -1 ){
+              window.location.href = $.cookie("lastSearchUrl") + "&atomDownloadCompleted=true";
+            }
+          })
+          .catch(function (error) {
+
+          });
       }
     });
 

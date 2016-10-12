@@ -7,10 +7,12 @@
     "16": "images/sa-ventures-16x16.png",
     "128": "images/sa-ventures-128x128.png"
   },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "default_locale": "en",
   "background": {
     "scripts": [
       "scripts/chromereload.js",
+      "scripts/xlsx.core.min.js",
       "scripts/alasql.min.js",
       "scripts/moment.min.js",
       "scripts/jquery.min.js",
@@ -39,7 +41,8 @@
     "storage",
     "webNavigation",
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "unlimitedStorage"
   ],
   "options_ui": {
     "page": "options.html",
@@ -66,7 +69,7 @@
     }
   ],
   "omnibox": {
-    "keyword": "OMNIBOX-KEYWORD"
+    "keyword": "Linkedin"
   },
   "browser_action": {
     "default_icon": {

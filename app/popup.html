@@ -7,14 +7,97 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="styles/bootstrap-tagsinput.css" rel="stylesheet">
     <link href="styles/main.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body>
+    <div class="container">
+      <h2>Atom LinkedIn Scraper <small>Filters</small></h2>
+      <hr>
+      <div class="row">
+        <p>Please write the list of search terms you want to look for in your candidates (and hit enter), no duplicates allowed:</p>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <input size="400" id="skills_list" type="text" value="" data-role="tagsinput" class="form-control" placeholder="Skills..." >
+          </div>
 
-    <p>Do you want to start extracting information from here?</p>
 
-    <button id="extractInfoBtn">Extract Information</button>
+          <h3>Other options</h3>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <div>
+                <b>Languages</b>
+                <div class="checkbox">
+                  <label>
+                    <input id="lang_eng" type="checkbox"> English
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input id="lang_esp" type="checkbox"> Spanish
+                  </label>
+                </div>
+                <br>
+                <b>Contact:</b>
+                <div class="checkbox">
+                  <label>
+                    <input id="has_email" type="checkbox"> Has Email
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input id="has_phone" type="checkbox"> Has Phone
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input id="has_im" type="checkbox"> Has IM
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div>
+              <div class="form-group">
+                <div>
+                  <b>Social media:</b>
+                  <div class="checkbox">
+                    <label>
+                      <input id="has_twitter" type="checkbox"> Has Twitter
+                    </label>
+                  </div>
+                  <br>
+                  <b>Other:</b>
+                  <div class="checkbox">
+                    <label>
+                      <input id="is_connection" type="checkbox"> Is connection
+                    </label>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input id="has_summary" type="checkbox"> Has summary
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="save_skills" class="btn btn-primary btn-lg btn-block">Save Options</button>
+        </form>
+
+        <hr>
+        <h3>Candidates</h3>
+        <div id="candidates">
+
+        </div>
+      </div>
+    </div>
+
 
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
@@ -22,8 +105,13 @@
     <!-- endbuild -->
 
     <!-- build:js scripts/popup.js -->
+    <script src="scripts/xlsx.core.min.js"></script>
+    <script src="scripts/moment.min.js"></script>
     <script src="scripts/alasql.min.js"></script>
     <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/loading_screen.js"></script>
+    <script src="scripts/bootstrap-tagsinput.min.js"></script>
     <script src="scripts/popup.js"></script>
     <!-- endbuild -->
   </body>

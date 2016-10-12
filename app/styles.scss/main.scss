@@ -1,4 +1,16 @@
 $padding: 20px;
+$windowWith: 600px;
+$windowHeigh: 680px;
 body {
   padding: $padding;
+  min-width: $windowWith;
+  min-height: $windowHeigh;
+}
+
+.bootstrap-tagsinput{
+  width: 100% !important;
+}
+
+.form-horizontal .form-group{
+  margin: 0px;
 }

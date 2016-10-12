@@ -3,13 +3,45 @@
 */
 .atom-download-profile{
   display: block !important;
-
+  margin-top: 3px !important;
   img{
     vertical-align: sub;
   }
 }
 
-/** Overrides to keep LinkedIn looking good **/
-.result .srp-actions .secondary-actions-trigger .menu{
-  top : 50% !important;
+.atom-select-candidate{
+  background-color: #3e8f3e !important;
+  margin-top: 3px;
 }
+
+.skillMatch{
+  display: inline-block;
+  padding: 5px;
+  color: #fff;
+  background-color: #122b40;
+  margin-top: 3px;
+  font-weight: bold;
+}
+
+.secondary-actions-trigger.skills-match-list{
+  li{
+    padding: 5px;
+    text-transform: capitalize;
+
+    .percentage{
+      color: #ffffff;
+      background-color: #122b40;
+      padding:3px;
+      margin: 3px;
+    }
+  }
+}
+
+/** Overrides to keep LinkedIn looking good **/
+.result {
+  padding-bottom:50px !important;
+  .srp-actions .secondary-actions-trigger .menu {
+    top: 34% !important;
+  }
+}
+
