@@ -9,7 +9,7 @@ To install the extension from the Google Chrome Store visit our extension here, 
 https://chrome.google.com/webstore/detail/afllamchnahedmoefbhiihcdoakmojom/publish-accepted
 
 ##Download the extension Here!
-Optionally, you can install the non published version gere, to do it you can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
+Optionally, you can install the non published version here, to do it you can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
 
 ###How to use it
 Before you use it first enable the [developer mode in chrome] (https://developer.chrome.com/extensions/faq#faq-dev-01), to do this follow this instructions.
