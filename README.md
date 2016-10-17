@@ -4,29 +4,27 @@ You can download the latest version of the extension (0.0.2) [here] (https://git
 ###How to use it
 Before you use it first enable the [developer mode in chrome] (https://developer.chrome.com/extensions/faq#faq-dev-01), to do this follow this instructions.
 
-![Enable Dev Mode](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Enable Dev Mode](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/enable_dev_mode.gif "Enable Dev Mode")
 
 After enabling the developer mode, you should unpack the downloaded file (AtomLinkedInScraper-0.0.X.zip) and in the "Extensions" window, load it as an unpacked extension, like this_
 
-![Enable Dev Mode](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Load Extension](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/load_extension.gif "Load Extension")
 
 Once you add the extension it will automatically add the AtomLinkedInScraper button, where you can write what you are looking for in each candidate, and set some rules to keep in mind:
 
-![Enable Dev Mode](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
-Also, when you use the search profile it will add the action buttons and once you "Get the profile" it will show you the Candidate rating and you'll be able to select him/her as a candidate:
-
-![Enable Dev Mode](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
-
-After you select the list of candidates you'll be able to download them in an Excel format:
-
-![Enable Dev Mode](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Extension Button](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/button.png "Extension Button")
 
 Simply add the extension in developer mode, enable it and run any search on LinkedIn, on each of the results you'll find a set of new buttons to interact with the profile.
 
-![Enable Dev Mode](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Extension Buttons](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/action_buttons.png "Extension Buttons")
 
+Also, when you use the search profile it will add the action buttons and once you "Get the profile" it will show you the Candidate rating and you'll be able to select him/her as a candidate:
 
+![Extension Buttons](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/rating.png "Extension Buttons")
+
+After you select the list of candidates you'll be able to download them in an Excel format:
+
+![Download in Excel](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/download_excel.png "Download in Excel")
 
 ##How to work with the repo?
 This extension is based on the Yeoman Google Chrome extension Generator (https://github.com/yeoman/generator-chrome-extension).
