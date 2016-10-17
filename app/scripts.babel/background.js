@@ -70,6 +70,7 @@ var AtomScraperBackground = (function(jQuery, alasql){
           }
         })
         .catch(function (error) {
+          console.log('error get Profile', error);
           reject(error);
         });
 
@@ -153,40 +154,52 @@ var AtomScraperBackground = (function(jQuery, alasql){
           
           var skillMatchPercentage = 0;
 
-          var skillSet = settings.skills, skillCount = [];
-          if(skillSet.length > 0){
+          if(settings && settings.hasOwnProperty("skills")){
+            var skillSet = settings.skills, skillCount = [];
+            if(skillSet.length > 0){
 
-            // Now we calculate the apparition of the keywords in the profile
-            skillSet.map(function (skill) {
+              // Now we calculate the apparition of the keywords in the profile
+              skillSet.map(function (skill) {
 
-              if(!skillCount[skill]){
-                skillCount[skill] = 0;
-              }
+                if(!skillCount[skill]){
+                  skillCount[skill] = 0;
+                }
 
-              try{
-                var countProfile = lookForOccurrencesInText(profile.summary, skill),
-                  countSkills = lookForOccurrencesInArray(profile.skills, skill),
-                  countExperience = lookForOccurrencesInArray(profile.experience, skill, 'summary');
+                try{
+                  var countProfile = lookForOccurrencesInText(profile.summary, skill),
+                    countSkills = lookForOccurrencesInArray(profile.skills, skill),
+                    countExperience = lookForOccurrencesInArray(profile.experience, skill, 'summary');
 
-                skillCount[skill] += countProfile + countSkills + countExperience;
-              }catch (e){
-                console.log(e);
-              }
-            });
+                  skillCount[skill] += countProfile + countSkills + countExperience;
+                }catch (e){
+                  console.log(e);
+                }
+              });
 
-            // Build and send the response
-            var rulesAmount = Object.keys(settings).length - 1;
-            skillMatchPercentage = skillMatchPercentageCalculation(skillCount);
-            console.log(skillMatchPercentage);
-            success({
-              rules: rulesAmount,
-              rulesMatched: pointSystem,
-              rulesSummary: ruleObj,
-              skillMatchPercentage: skillMatchPercentage
-            });
+              // Build and send the response
+              var rulesAmount = Object.keys(settings).length - 1;
+              skillMatchPercentage = skillMatchPercentageCalculation(skillCount);
+              console.log(skillMatchPercentage);
+              success({
+                rules: rulesAmount,
+                rulesMatched: pointSystem,
+                rulesSummary: ruleObj,
+                skillMatchPercentage: skillMatchPercentage
+              });
 
-          } else {
+            } else {
 
+              // Build and send the response
+              var rulesAmount = Object.keys(settings).length - 1;
+              success({
+                rules: rulesAmount,
+                rulesMatched: pointSystem,
+                rulesSummary: ruleObj,
+                skillMatchPercentage: []
+              });
+
+            }
+          }else{
             // Build and send the response
             var rulesAmount = Object.keys(settings).length - 1;
             success({
@@ -195,12 +208,14 @@ var AtomScraperBackground = (function(jQuery, alasql){
               rulesSummary: ruleObj,
               skillMatchPercentage: []
             });
-
           }
+
+
 
 
         })
         .catch(function (error) {
+          console.log('error rating', error);
           reject(false);
         });
     });
@@ -352,47 +367,73 @@ var AtomScraperBackground = (function(jQuery, alasql){
   // Create the database to handle queries
   var createDatabase = function () {
 
-    alasql('CREATE INDEXEDDB DATABASE IF NOT EXISTS LinkedinProfiles');
-    alasql('ATTACH INDEXEDDB DATABASE LinkedinProfiles',[],function(data,err){
+    alasql.promise([
+      'CREATE INDEXEDDB DATABASE IF NOT EXISTS LinkedinProfiles'
+    ])
+      .then(function(result){
 
-      if(err){
-        console.log('error loading DB', err);
-      }
+        alasql.promise([
+          'ATTACH INDEXEDDB DATABASE LinkedinProfiles'
+        ])
+          .then(function(result){
+            alasql.promise([
+              'USE LinkedinProfiles'
+            ])
+              .then(function(result){
+                alasql.promise([
+                  'CREATE TABLE IF NOT EXISTS Profiles  (' +
+                  'profileUrl varchar(250),' +
+                  'profileName varchar(100),' +
+                  'currentProfile varchar(100),' +
+                  'location varchar(250),' +
+                  'isConnection boolean,' +
+                  'summary text,' +
+                  'experience json,' +
+                  'languages json,' +
+                  'skills json,' +
+                  'email json,' +
+                  'phone json,' +
+                  'im json,' +
+                  'twitter json,' +
+                  'id varchar(250) PRIMARY KEY' +
+                  ')',
+                  'CREATE TABLE IF NOT EXISTS Candidates  (' +
+                  'profileUrl varchar(250),' +
+                  'profileName varchar(100),' +
+                  'currentProfile varchar(100),' +
+                  'location varchar(250),' +
+                  'isConnection boolean,' +
+                  'summary text,' +
+                  'experience json,' +
+                  'languages json,' +
+                  'skills json,' +
+                  'email json,' +
+                  'phone json,' +
+                  'im json,' +
+                  'twitter json,' +
+                  'id varchar(250) PRIMARY KEY' +
+                  ')'
+                ])
+                  .then(function(result){
+                    console.log('result creating tables', result);
+                  })
+                  .catch(function (error) {
+                    console.log('error', error);
+                  });
+              })
+              .catch(function (error) {
+                console.log('error', error);
+              });
+          })
+          .catch(function (error) {
+            console.log('error', error);
+          });
 
-      alasql('USE AtomProfiles');
-      alasql('CREATE TABLE IF NOT EXISTS Profiles  (' +
-        'profileUrl varchar(250),' +
-        'profileName varchar(100),' +
-        'currentProfile varchar(100),' +
-        'location varchar(250),' +
-        'isConnection boolean,' +
-        'summary text,' +
-        'experience json,' +
-        'languages json,' +
-        'skills json,' +
-        'email json,' +
-        'phone json,' +
-        'im json,' +
-        'twitter json,' +
-        'id varchar(250) PRIMARY KEY' +
-        ')');
-      alasql('CREATE TABLE IF NOT EXISTS Candidates  (' +
-        'profileUrl varchar(250),' +
-        'profileName varchar(100),' +
-        'currentProfile varchar(100),' +
-        'location varchar(250),' +
-        'isConnection boolean,' +
-        'summary text,' +
-        'experience json,' +
-        'languages json,' +
-        'skills json,' +
-        'email json,' +
-        'phone json,' +
-        'im json,' +
-        'twitter json,' +
-        'id varchar(250) PRIMARY KEY' +
-        ')');
-    });
+      })
+      .catch(function (error) {
+        console.log('error', error);
+      });
+
 
   };
 
@@ -438,7 +479,7 @@ var AtomScraperBackground = (function(jQuery, alasql){
         }
       })
       .catch(function (error) {
-        console.log('error', error);
+        console.log('error get Profile', error);
       });
 
 
@@ -478,7 +519,6 @@ var AtomScraperBackground = (function(jQuery, alasql){
   };
 
   var setProfileAsCandidate = function (profile) {
-
     var user_id = getProfileId(profile.profileUrl);
 
     return new Promise(function (success, reject) {

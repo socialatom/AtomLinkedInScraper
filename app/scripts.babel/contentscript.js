@@ -42,17 +42,17 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
         var skillPercentageIndicator = $(element).find('.skillMatch');
         var skillMatchListDropDown = $(element).find('.skills-match-list');
         var buttonsContainer = $(element).find('#download-profile-button');
-
+        console.log('here I am');
         // Try to get the profile from the local indexedDB
         getProfile({profileName: profileName, currentProfile: currentProfile})
           .then(function (response) {
             // Get the profile and save it into the global variable
             if(response.success){
-              console.log(response);
               // Now we get the rating for the profile
               profilesList[response.data.id] = response.data;
               rateProfile(response.data)
                 .then(function (rating) {
+                  
                   if(rating.success){
                     // Add the Select Candidate button
                     var buttonSelectAsCandidate = "<a class='primary-action-button label atom-select-candidate' " +
@@ -72,8 +72,6 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
 
                     // Append the rules summary
                     $(list).append('<li>Satisfies '+rating.data.rulesMatched+' of '+rating.data.rules+' rules</li>');
-
-
 
                   }
                 })
