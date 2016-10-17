@@ -3,8 +3,13 @@
 #Socialatom LinkedIn Scraper
 Socialatom Group is always looking for ways to make things easier for Startups, and one of the hardest processes for any tech company is the Candidates Selection for Recruiting; that's why we have developed this extension that works as a complement for LinkedIn, incorporating numerical measures and visual components to make it easier to pick the profiles to fit your need.
 
+## Install the extension from the store
+To install the extension from the Google Chrome Store visit our extension here, and click the "add to chrome" button: 
+
+https://chrome.google.com/webstore/detail/afllamchnahedmoefbhiihcdoakmojom/publish-accepted?authuser=2
+
 ##Download the extension Here!
-You can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
+Optionally, you can install the non published version gere, to do it you can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
 
 ###How to use it
 Before you use it first enable the [developer mode in chrome] (https://developer.chrome.com/extensions/faq#faq-dev-01), to do this follow this instructions.
