@@ -52,7 +52,7 @@ var AtomScraperContent = function (jQuery, MutationSummary) {
               profilesList[response.data.id] = response.data;
               rateProfile(response.data)
                 .then(function (rating) {
-                  
+
                   if(rating.success){
                     // Add the Select Candidate button
                     var buttonSelectAsCandidate = "<a class='primary-action-button label atom-select-candidate' " +
