@@ -1,3 +1,5 @@
+![Socialatom Group](http://i2.wp.com/socialatomventures.com/wp-content/uploads/2016/08/savBlack.png?w=400 "Socialatom Group")
+
 ##Download the extension Here!
 You can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
 
