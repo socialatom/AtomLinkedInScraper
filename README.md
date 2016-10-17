@@ -12,10 +12,12 @@ https://chrome.google.com/webstore/detail/afllamchnahedmoefbhiihcdoakmojom/publi
 Optionally, you can install the non published version here, to do it you can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
 
 ###How to use it
+(For the downloaded version only)
 Before you use it first enable the [developer mode in chrome] (https://developer.chrome.com/extensions/faq#faq-dev-01), to do this follow this instructions.
 
 ![Enable Dev Mode](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/enable_dev_mode.gif "Enable Dev Mode")
 
+(For the downloaded version only)
 After enabling the developer mode, you should unpack the downloaded file (AtomLinkedInScraper-0.0.X.zip) and in the "Extensions" window, load it as an unpacked extension, like this_
 
 ![Load Extension](https://raw.githubusercontent.com/socialatom/AtomLinkedInScraper/master/images/load_extension.gif "Load Extension")
