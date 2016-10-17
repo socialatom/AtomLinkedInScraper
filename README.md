@@ -1,4 +1,4 @@
-##Download the extension!
+##Download the extension Here!
 You can download the latest version of the extension (0.0.2) [here] (https://github.com/socialatom/AtomLinkedInScraper/raw/master/versions/AtomLinkedInScraper-0.0.2.zip)
 
 ###How to use it
